@@ -24,9 +24,11 @@ const uploadProfileHelper = (req, res) => {
     return new Promise(async (resolve, reject) => {
         uploadimg(req, res, (multererr) => {
             if (multererr) reject(multererr)  
-            console.log(req.file);     
             req.file.path=req.file.path.split("s3bucket").pop()
-            resolve({path:req.file})
+            delete req.file.destination
+            delete req.file.fieldname
+            delete req.file.encoding
+            resolve({status:req.file})
         })
     })
 }
