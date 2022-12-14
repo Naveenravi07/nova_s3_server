@@ -1,5 +1,8 @@
+const RetriveRouter = require("./retrieve")
 const UploadRouter = require("./upload")
+
 const Routes ={
-    UploadRouter
+    UploadRouter,
+    RetriveRouter
 }
 module.exports=Routes
