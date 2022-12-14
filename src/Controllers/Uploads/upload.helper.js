@@ -3,6 +3,7 @@ const multer = require('multer');
 const path = require('path')
 const fs = require('fs')
 const { v4: uuidv4 } = require('uuid');
+const { ApiEndpoints } = require('../../Constants/endpoints');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -29,6 +30,7 @@ const uploadProfileHelper = (req, res) => {
             delete req.file.destination
             delete req.file.fieldname
             delete req.file.encoding
+            req.file.url=`${ApiEndpoints.s3imageRetriveurl}?collection=${req.query.collection}&url=${req.file.path}`
             resolve({status:req.file})
         })
     })
