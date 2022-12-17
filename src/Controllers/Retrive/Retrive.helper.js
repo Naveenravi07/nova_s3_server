@@ -7,10 +7,11 @@ const RetriveImageFromServer = (query) => {
 try{
     return new Promise(async(resolve,reject)=>{
         if(!fs.existsSync(path.join(imagefolder,"\\",query.collection))) reject({message:'Collection Does Not Exist'});
-        if(fs.existsSync(path.join(publicfolder,"\\",query.url))){
+        if(fs.existsSync(path.join(imagefolder,"\\",query.collection,"\\",query.url))){
         let imglog=await imageLogModel.findOne({userid:query.userid})
-        if(!imglog) reject({message:"We have some trouble in verifing your identity"})
-        resolve(fs.readFileSync(path.join(publicfolder,"\\",query.url)))
+        if(imglog==null||imglog==undefined) return reject({message:"Access Denied"})
+        if(imglog.filename!=query.url) reject({message:'Access Denied'})
+        resolve(fs.readFileSync(path.join(imagefolder,"\\",query.collection,"\\",query.url)))
         } else reject({message:"Item with the specified url doesnt exist"});
         })
 }catch(err){throw {message:"An Unknown Error Occured"}}
