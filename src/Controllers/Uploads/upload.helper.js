@@ -33,7 +33,7 @@ const uploadProfileHelper = (req, res) => {
             delete req.file.destination
             delete req.file.fieldname
             delete req.file.encoding
-            req.file.url=`${ApiEndpoints.s3imageRetriveurl}?collection=${req.query.collection}&url=${req.file.path}`
+            req.file.url=`${ApiEndpoints.s3imageRetriveurl}?collection=${req.query.collection}&userid=${req.body.userid}&url=${req.file.filename}`
             resolve({status:req.file})
         })
     })
