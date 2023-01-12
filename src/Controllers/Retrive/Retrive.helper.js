@@ -12,6 +12,7 @@ try{
         imglog= imglog.find((log)=>log.filename==query.url)
         if(imglog==null||imglog==undefined) return reject({message:"Access Denied"})
         if(imglog.filename!==query.url) reject({message:'Access Denied'})
+        if(imglog.userid!==query.userid) reject({message:'Access Denied'})
         resolve(fs.readFileSync(path.join(imagefolder,"\\",query.collection,"\\",query.url)))
         } else reject({message:"Item with the specified url doesnt exist"});
         })
