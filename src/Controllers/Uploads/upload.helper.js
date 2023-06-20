@@ -27,8 +27,8 @@ const uploadProfileHelper = (req, res) => {
     return new Promise(async (resolve, reject) => {
         uploadimg(req, res, (multererr) => {
             if (multererr) reject(multererr)  
+            else{
             req.file.path=req.file.path.split("s3bucket").pop()
-            console.log(req.file);
             // Add the user id after jwt 
              new imageLogModel({filename:req.file.filename,path:req.file.path,orginalfilename:req.file.originalname,size:req.file.size,mimetype:req.file.mimetype,userid:req.body.userid}).save()
             delete req.file.destination
@@ -36,6 +36,7 @@ const uploadProfileHelper = (req, res) => {
             delete req.file.encoding
             req.file.url=`${ApiEndpoints.s3imageRetriveurl}?collection=${req.query.collection}&userid=${req.body.userid}&url=${req.file.filename}`
             resolve({status:req.file})
+            }
         })
     })
 }
