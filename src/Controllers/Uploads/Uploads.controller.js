@@ -5,7 +5,7 @@ const { uploadProfileHelper } = require("./upload.helper")
 const ImageUploadController = async (req, res) => {
 const response = await uploadProfileHelper(req,res)
 .then((result)=>new UploadResponse(200,"Upload Success",result))
-.catch((err)=>new UploadResponse(400,"Upload Failed",null))
+.catch((err)=>new UploadResponse(400,"Upload Failed",err))
 res.status(response.status).send(response)
 };
 

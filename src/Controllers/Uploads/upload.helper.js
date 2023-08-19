@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
             cb(null, path.join(__dirname, `../../public/Images/${req.query.collection}/`))
         } else cb({ name: "Data Type Error", message: "Please Provide A Valid Image", })
     },
-    filename: function (req, file, cb) {
+    filename: function (_, file, cb) {
         cb(null, `${uuidv4()}-${file.originalname}`)
     }
 })
@@ -30,11 +30,11 @@ const uploadProfileHelper = (req, res) => {
             else{
             req.file.path=req.file.path.split("s3bucket").pop()
             // Add the user id after jwt 
-             new imageLogModel({filename:req.file.filename,path:req.file.path,orginalfilename:req.file.originalname,size:req.file.size,mimetype:req.file.mimetype,userid:req.body.userid}).save()
+             new imageLogModel({filename:req.file.filename,path:req.file.path,orginalfilename:req.file.originalname,size:req.file.size,mimetype:req.file.mimetype,userid:req.body.userId}).save()
             delete req.file.destination
             delete req.file.fieldname
             delete req.file.encoding
-            req.file.url=`${ApiEndpoints.s3imageRetriveurl}?collection=${req.query.collection}&userid=${req.body.userid}&url=${req.file.filename}`
+            req.file.url=`${ApiEndpoints.s3imageRetriveurl}?collection=${req.query.collection}&userid=${req.body.userId}&url=${req.file.filename}`
             resolve({status:req.file})
             }
         })
